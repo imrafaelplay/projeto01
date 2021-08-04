@@ -12,7 +12,7 @@ package util;
 public class GeradorUtil {
 
     /**
-     * Retorna um valor String conforme a quantidade de número solcitado
+     * Retorna um valor String conforme a quantidade de número solicitado
      *
      * @param qtde
      * @return
@@ -37,9 +37,42 @@ public class GeradorUtil {
         return numero;
     }
 
+    public String gerarcnpj(){
+        return gerarNumero(2) + "." + gerarNumero(3) + "." + gerarNumero(3) + "/0001-" + gerarNumero(2);
+    }
+   
+    public String gerarcep(){
+        return gerarNumero(5) + "-" + gerarNumero(3);
+    }
+   
+    public String gerartelefonefixo(){
+        return "(48)3" + gerarNumero(3) + "-" + gerarNumero(4);
+    }
+    
+    public String gerartelefonecelular(){
+        return "(48)9" + gerarNumero(4) + "-" + gerarNumero(4);
+    }
+    public String gerarnome(){
+        String [] nomes = { "Rafael", "Arli", "João", "Ana", "lucas", "Luan", "Leonardo", "Giovana", "Rodrigo", 
+            "Renan", "Francieli", "Diego", "Marcelo", "Jenifer", "Luiz", "Maria", "Pedro", "Matheus", "Gilherme", "Vinicius" };
+        int tamanholista = nomes.length;
+        int indice = (int) (Math.random() * tamanholista);
+        String nome = nomes[indice];        
+        return nomes[indice] + " " + gerarsobrenome();
+    }
+    private String gerarsobrenome(){
+        String [] sobrenomes = { "Silva", "Motto", "Mota", "Oliveira", "Abravaneu", "Rocha", "Pereira", "Pires", "Percicotte", 
+            "Santos", "Souza", "Zem", "Stark", "Peixes", "Fischer", "Smitch", "Tango", "Carvalho", "Peixoto", "Alves" };
+        int tamanholista = sobrenomes.length;
+        int indice = (int) (Math.random() * tamanholista);
+        String sobrenome = sobrenomes[indice];
+        return sobrenome;
+    }
+    
+    
     public static void main(String[] args) {
         GeradorUtil util = new GeradorUtil();
-        String cpf = util.gerarCpf();
-        System.out.println("CPF: " + cpf);
+        String nome = util.gerarnome();
+        System.out.println("Nome: " + nome);
     }
 }
