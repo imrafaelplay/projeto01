@@ -5,6 +5,7 @@
  */
 package tela;
 
+import entidade.Aluno;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +13,8 @@ import javax.swing.JOptionPane;
  * @author rafael.silva6
  */
 public class CadastroAluno extends javax.swing.JFrame {
+
+    private Aluno aluno;
 
     /**
      * Creates new form CadastroAluno
@@ -31,9 +34,11 @@ public class CadastroAluno extends javax.swing.JFrame {
 
         principal = new javax.swing.JPanel();
         titulo = new javax.swing.JLabel();
-        nome = new javax.swing.JLabel();
         varNome = new javax.swing.JTextField();
         btSalvar = new javax.swing.JButton();
+        nome2 = new javax.swing.JLabel();
+        nome3 = new javax.swing.JLabel();
+        varIdade = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Cliente");
@@ -41,10 +46,6 @@ public class CadastroAluno extends javax.swing.JFrame {
         titulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo.setText("Cadastro Aluno");
-
-        nome.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        nome.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        nome.setText("Nome:");
 
         btSalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btSalvar.setText("Salvar");
@@ -54,29 +55,46 @@ public class CadastroAluno extends javax.swing.JFrame {
             }
         });
 
+        nome2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        nome2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        nome2.setText("Idade:");
+
+        nome3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        nome3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        nome3.setText("Nome:");
+
+        varIdade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
         javax.swing.GroupLayout principalLayout = new javax.swing.GroupLayout(principal);
         principal.setLayout(principalLayout);
         principalLayout.setHorizontalGroup(
             principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(principalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(nome2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nome3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(211, Short.MAX_VALUE))
+                    .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(varIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         principalLayout.setVerticalGroup(
             principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(principalLayout.createSequentialGroup()
                 .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
                 .addGroup(principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nome)
-                    .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                    .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nome3))
+                .addGap(18, 18, 18)
+                .addGroup(principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nome2)
+                    .addComponent(varIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(btSalvar)
                 .addGap(56, 56, 56))
         );
@@ -97,17 +115,46 @@ public class CadastroAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-       boolean erro = carregarAluno();
-       if(!erro) {
-           
-       } 
+        aluno = new Aluno();
+        boolean erro = carregarAluno();
+        if (!erro) {
+
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private boolean carregarAluno() {
-        String nome = varNome.getText().trim();
         boolean temErro = false;
-        if (nome.length() >= 3) {
-            //TODO jogar valor para o ojeto aluno
+
+        String nome = varNome.getText().trim();
+        temErro = validarcampo3Valor(nome);
+        if(temErro){
+            aluno.setNome(nome);
+        }
+        return temErro;
+    }
+
+    private boolean validarIdade() {
+        String idade = varIdade.getText().trim();
+        if (idade.equals("")) {
+            boolean temErro = true;
+            JOptionPane.showMessageDialog(null, "Digite uma idade correta!");
+        } else {
+            int valorIdade = Integer.parseInt(idade);
+            if (valorIdade <= 16 || valorIdade > 100) {
+                boolean temErro = true;
+                JOptionPane.showMessageDialog(null, "Digite uma idade correta!");
+            } else {
+                aluno.setIdade(valorIdade);
+            }
+        }
+        return temErro;
+    }
+
+    private boolean validarcampo3Valor(String valor) {
+        
+        boolean temErro = false;
+        if (valor.length() >= 3) {
+            aluno.setNome(valor);
         } else {
             temErro = true;
             JOptionPane.showMessageDialog(null, "Digiti um nome correto!");
@@ -152,9 +199,11 @@ public class CadastroAluno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSalvar;
-    private javax.swing.JLabel nome;
+    private javax.swing.JLabel nome2;
+    private javax.swing.JLabel nome3;
     private javax.swing.JPanel principal;
     private javax.swing.JLabel titulo;
+    private javax.swing.JFormattedTextField varIdade;
     private javax.swing.JTextField varNome;
     // End of variables declaration//GEN-END:variables
 }
